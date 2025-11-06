@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebApplicationLS21.Data;
+using WebApplicationLS21.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // ✅ Cấu hình kết nối Database (EF Core)
-IServiceCollection services = builder.Services.AddDbContext<ApplicationDbContext>(options =>
+builder.Services.AddDbContext<CourseHubContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
@@ -21,9 +21,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapControllerRoute(

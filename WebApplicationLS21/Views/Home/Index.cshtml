@@ -1,8 +1,91 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Trang chủ - CourseHub";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!-- Banner đầu trang -->
+<section class="hero-section text-center text-white d-flex align-items-center justify-content-center">
+    <div class="overlay"></div>
+    <div class="content fade-in">
+        <h1 class="display-4 fw-bold mb-3">🎓 Chào mừng đến với <span class="text-warning">CourseHub</span></h1>
+        <p class="lead mb-4">Nơi chia sẻ và học tập trực tuyến dành cho mọi người</p>
+        <a href="/Courses" class="btn btn-warning btn-lg me-2">Khám phá khóa học</a>
+        <a href="/Courses/Create" class="btn btn-outline-light btn-lg">Đăng khóa học</a>
+    </div>
+</section>
+
+<!-- Giới thiệu tính năng -->
+<div class="container mt-5 fade-in">
+    <h2 class="text-center fw-bold mb-5">💡 Tính năng nổi bật</h2>
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow border-0">
+                <div class="card-body">
+                    <i class="bi bi-laptop display-4 text-primary"></i>
+                    <h5 class="card-title mt-3">Học mọi lúc, mọi nơi</h5>
+                    <p class="text-muted">Truy cập khóa học từ bất kỳ thiết bị nào, chỉ cần Internet.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow border-0">
+                <div class="card-body">
+                    <i class="bi bi-people display-4 text-success"></i>
+                    <h5 class="card-title mt-3">Cộng đồng học viên</h5>
+                    <p class="text-muted">Kết nối, trao đổi và học hỏi cùng bạn bè trên khắp cả nước.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow border-0">
+                <div class="card-body">
+                    <i class="bi bi-book display-4 text-warning"></i>
+                    <h5 class="card-title mt-3">Kho khóa học phong phú</h5>
+                    <p class="text-muted">Hàng trăm khóa học chất lượng được biên soạn bởi chuyên gia.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- Kêu gọi hành động -->
+<section class="cta-section text-center text-white mt-5 py-5">
+    <div class="overlay"></div>
+    <div class="container fade-in">
+        <h2 class="fw-bold mb-3">🚀 Bắt đầu hành trình học tập của bạn hôm nay!</h2>
+        <p class="lead mb-4">Cùng CourseHub nâng tầm tri thức và chia sẻ kiến thức đến cộng đồng.</p>
+        <a href="/Courses" class="btn btn-light btn-lg">Tham gia ngay</a>
+    </div>
+</section>
+
+<!-- CSS nội bộ -->
+<style>
+    .hero-section {
+        position: relative;
+        height: 80vh;
+        background: url('https://images.unsplash.com/photo-1584697964194-8f162f1b7c8e?auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
+    }
+    .cta-section {
+        position: relative;
+        background: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
+    }
+    .overlay {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+    }
+    .content, .cta-section .container {
+        position: relative;
+        z-index: 2;
+    }
+    .fade-in {
+        animation: fadeIn 1.5s ease-in-out;
+    }
+    keyframes fadeIn {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+

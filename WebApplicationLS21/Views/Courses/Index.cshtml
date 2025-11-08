@@ -1,0 +1,57 @@
+﻿@model IEnumerable<WebApplicationLS21.Models.Course>
+
+@{
+    ViewData["Title"] = "Danh sách khóa học";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">📘 Danh sách khóa học</h2>
+
+    <p>
+        <a class="btn btn-primary" asp-action="Create">
+            + Thêm khóa học mới
+        </a>
+    </p>
+
+    <table class="table table-bordered table-striped table-hover mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>Mã khóa học</th>
+                <th>Tên khóa học</th>
+                <th>Mô tả</th>
+                <th>Giảng viên</th>
+                <th>Thời lượng (giờ)</th>
+                <th>Giá (VNĐ)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.CourseID</td>
+                        <td>@item.Title</td>
+                        <td>@item.Description</td>
+                        <td>@item.Instructor.FullName</td>
+                        <td>@item.</td>
+                        <td>@String.Format("{0:N0}", item.Price)</td>
+
+                        <td class="text-center">
+                            <a asp-action="Edit" asp-route-id="@item.CourseID" class="btn btn-sm btn-warning">Sửa</a>
+                            <a asp-action="Details" asp-route-id="@item.CourseID" class="btn btn-sm btn-info">Chi tiết</a>
+                            <a asp-action="Delete" asp-route-id="@item.CourseID" class="btn btn-sm btn-danger">Xóa</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7" class="text-center text-muted">Chưa có khóa học nào.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

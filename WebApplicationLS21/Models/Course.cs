@@ -32,5 +32,6 @@ namespace WebApplicationLS21.Models
         public ICollection<Lesson>? Lessons { get; set; }
         public ICollection<Review>? Reviews { get; set; }
         public ICollection<Enrollment>? Enrollments { get; set; }
+        public int DurationHours { get; internal set; }
     }
 }

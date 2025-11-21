@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WebApplicationLS21.Models;
+using WebApplicationLS21.Data;
 
 #nullable disable
 
 namespace WebApplicationLS21.Migrations
 {
     [DbContext(typeof(CourseHubContext))]
-    [Migration("20251121032130_InitialSetup")]
-    partial class InitialSetup
+    [Migration("20251203041303_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,7 +48,7 @@ namespace WebApplicationLS21.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Enrollments");
+                    b.ToTable("Enrollment", (string)null);
                 });
 
             modelBuilder.Entity("CourseHub.Models.Lesson", b =>
@@ -77,7 +77,7 @@ namespace WebApplicationLS21.Migrations
 
                     b.HasIndex("CourseID");
 
-                    b.ToTable("Lessons");
+                    b.ToTable("Lesson", (string)null);
                 });
 
             modelBuilder.Entity("CourseHub.Models.Review", b =>
@@ -110,7 +110,7 @@ namespace WebApplicationLS21.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Review", (string)null);
                 });
 
             modelBuilder.Entity("WebApplicationLS21.Data.Instructor", b =>
@@ -131,7 +131,7 @@ namespace WebApplicationLS21.Migrations
 
                     b.HasKey("InstructorID");
 
-                    b.ToTable("Instructors");
+                    b.ToTable("Instructor", (string)null);
                 });
 
             modelBuilder.Entity("WebApplicationLS21.Models.Course", b =>
@@ -149,6 +149,9 @@ namespace WebApplicationLS21.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("DurationHours")
+                        .HasColumnType("int");
+
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -156,6 +159,7 @@ namespace WebApplicationLS21.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Title")
@@ -167,7 +171,7 @@ namespace WebApplicationLS21.Migrations
 
                     b.HasIndex("InstructorID");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Course", (string)null);
                 });
 
             modelBuilder.Entity("WebApplicationLS21.Models.User", b =>

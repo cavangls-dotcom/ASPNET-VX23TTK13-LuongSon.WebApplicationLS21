@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebApplicationLS21.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialSetup : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Instructors",
+                name: "Instructor",
                 columns: table => new
                 {
                     InstructorID = table.Column<int>(type: "int", nullable: false)
@@ -22,7 +22,7 @@ namespace WebApplicationLS21.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Instructors", x => x.InstructorID);
+                    table.PrimaryKey("PK_Instructor", x => x.InstructorID);
                 });
 
             migrationBuilder.CreateTable(
@@ -43,23 +43,24 @@ namespace WebApplicationLS21.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Courses",
+                name: "Course",
                 columns: table => new
                 {
                     CourseID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Category = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    InstructorID = table.Column<int>(type: "int", nullable: false)
+                    InstructorID = table.Column<int>(type: "int", nullable: false),
+                    DurationHours = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Courses", x => x.CourseID);
+                    table.PrimaryKey("PK_Course", x => x.CourseID);
                     table.ForeignKey(
-                        name: "FK_Courses_User_InstructorID",
+                        name: "FK_Course_User_InstructorID",
                         column: x => x.InstructorID,
                         principalTable: "User",
                         principalColumn: "UserID",
@@ -67,7 +68,7 @@ namespace WebApplicationLS21.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Enrollments",
+                name: "Enrollment",
                 columns: table => new
                 {
                     EnrollmentID = table.Column<int>(type: "int", nullable: false)
@@ -78,15 +79,15 @@ namespace WebApplicationLS21.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Enrollments", x => x.EnrollmentID);
+                    table.PrimaryKey("PK_Enrollment", x => x.EnrollmentID);
                     table.ForeignKey(
-                        name: "FK_Enrollments_Courses_CourseID",
+                        name: "FK_Enrollment_Course_CourseID",
                         column: x => x.CourseID,
-                        principalTable: "Courses",
+                        principalTable: "Course",
                         principalColumn: "CourseID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Enrollments_User_UserID",
+                        name: "FK_Enrollment_User_UserID",
                         column: x => x.UserID,
                         principalTable: "User",
                         principalColumn: "UserID",
@@ -94,7 +95,7 @@ namespace WebApplicationLS21.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Lessons",
+                name: "Lesson",
                 columns: table => new
                 {
                     LessonID = table.Column<int>(type: "int", nullable: false)
@@ -106,17 +107,17 @@ namespace WebApplicationLS21.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Lessons", x => x.LessonID);
+                    table.PrimaryKey("PK_Lesson", x => x.LessonID);
                     table.ForeignKey(
-                        name: "FK_Lessons_Courses_CourseID",
+                        name: "FK_Lesson_Course_CourseID",
                         column: x => x.CourseID,
-                        principalTable: "Courses",
+                        principalTable: "Course",
                         principalColumn: "CourseID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reviews",
+                name: "Review",
                 columns: table => new
                 {
                     ReviewID = table.Column<int>(type: "int", nullable: false)
@@ -129,15 +130,15 @@ namespace WebApplicationLS21.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reviews", x => x.ReviewID);
+                    table.PrimaryKey("PK_Review", x => x.ReviewID);
                     table.ForeignKey(
-                        name: "FK_Reviews_Courses_CourseID",
+                        name: "FK_Review_Course_CourseID",
                         column: x => x.CourseID,
-                        principalTable: "Courses",
+                        principalTable: "Course",
                         principalColumn: "CourseID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Reviews_User_UserID",
+                        name: "FK_Review_User_UserID",
                         column: x => x.UserID,
                         principalTable: "User",
                         principalColumn: "UserID",
@@ -145,33 +146,33 @@ namespace WebApplicationLS21.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_InstructorID",
-                table: "Courses",
+                name: "IX_Course_InstructorID",
+                table: "Course",
                 column: "InstructorID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Enrollments_CourseID",
-                table: "Enrollments",
+                name: "IX_Enrollment_CourseID",
+                table: "Enrollment",
                 column: "CourseID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Enrollments_UserID",
-                table: "Enrollments",
+                name: "IX_Enrollment_UserID",
+                table: "Enrollment",
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Lessons_CourseID",
-                table: "Lessons",
+                name: "IX_Lesson_CourseID",
+                table: "Lesson",
                 column: "CourseID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reviews_CourseID",
-                table: "Reviews",
+                name: "IX_Review_CourseID",
+                table: "Review",
                 column: "CourseID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reviews_UserID",
-                table: "Reviews",
+                name: "IX_Review_UserID",
+                table: "Review",
                 column: "UserID");
         }
 
@@ -179,19 +180,19 @@ namespace WebApplicationLS21.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Enrollments");
+                name: "Enrollment");
 
             migrationBuilder.DropTable(
-                name: "Instructors");
+                name: "Instructor");
 
             migrationBuilder.DropTable(
-                name: "Lessons");
+                name: "Lesson");
 
             migrationBuilder.DropTable(
-                name: "Reviews");
+                name: "Review");
 
             migrationBuilder.DropTable(
-                name: "Courses");
+                name: "Course");
 
             migrationBuilder.DropTable(
                 name: "User");

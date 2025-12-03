@@ -17,8 +17,9 @@ namespace WebApplicationLS21.Migrations
                 {
                     InstructorID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    FullName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -53,18 +54,23 @@ namespace WebApplicationLS21.Migrations
                     Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    InstructorID = table.Column<int>(type: "int", nullable: false),
-                    DurationHours = table.Column<int>(type: "int", nullable: false)
+                    InstructorID = table.Column<int>(type: "int", nullable: true),
+                    DurationHours = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Course", x => x.CourseID);
                     table.ForeignKey(
-                        name: "FK_Course_User_InstructorID",
+                        name: "FK_Course_Instructor_InstructorID",
                         column: x => x.InstructorID,
+                        principalTable: "Instructor",
+                        principalColumn: "InstructorID");
+                    table.ForeignKey(
+                        name: "FK_Course_User_UserID",
+                        column: x => x.UserID,
                         principalTable: "User",
-                        principalColumn: "UserID",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "UserID");
                 });
 
             migrationBuilder.CreateTable(
@@ -151,6 +157,11 @@ namespace WebApplicationLS21.Migrations
                 column: "InstructorID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Course_UserID",
+                table: "Course",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Enrollment_CourseID",
                 table: "Enrollment",
                 column: "CourseID");
@@ -183,9 +194,6 @@ namespace WebApplicationLS21.Migrations
                 name: "Enrollment");
 
             migrationBuilder.DropTable(
-                name: "Instructor");
-
-            migrationBuilder.DropTable(
                 name: "Lesson");
 
             migrationBuilder.DropTable(
@@ -193,6 +201,9 @@ namespace WebApplicationLS21.Migrations
 
             migrationBuilder.DropTable(
                 name: "Course");
+
+            migrationBuilder.DropTable(
+                name: "Instructor");
 
             migrationBuilder.DropTable(
                 name: "User");

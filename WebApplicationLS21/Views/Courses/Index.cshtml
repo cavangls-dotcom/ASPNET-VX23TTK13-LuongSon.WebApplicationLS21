@@ -34,8 +34,8 @@
                         <td>@item.CourseID</td>
                         <td>@item.Title</td>
                         <td>@item.Description</td>
-                        <td>@item.Instructor.FullName</td>
-                        <td>@item.</td>
+                        <td>@item.Instructor?.FullName</td>
+                        <td>@item.DurationHours</td>
                         <td>@String.Format("{0:N0}", item.Price)</td>
 
                         <td class="text-center">

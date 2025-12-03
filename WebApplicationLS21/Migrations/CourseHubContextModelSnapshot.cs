@@ -110,27 +110,6 @@ namespace WebApplicationLS21.Migrations
                     b.ToTable("Review", (string)null);
                 });
 
-            modelBuilder.Entity("WebApplicationLS21.Data.Instructor", b =>
-                {
-                    b.Property<int>("InstructorID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InstructorID"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("InstructorID");
-
-                    b.ToTable("Instructor", (string)null);
-                });
-
             modelBuilder.Entity("WebApplicationLS21.Models.Course", b =>
                 {
                     b.Property<int>("CourseID")
@@ -152,7 +131,7 @@ namespace WebApplicationLS21.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("InstructorID")
+                    b.Property<int?>("InstructorID")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
@@ -164,11 +143,40 @@ namespace WebApplicationLS21.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int?>("UserID")
+                        .HasColumnType("int");
+
                     b.HasKey("CourseID");
 
                     b.HasIndex("InstructorID");
 
+                    b.HasIndex("UserID");
+
                     b.ToTable("Course", (string)null);
+                });
+
+            modelBuilder.Entity("WebApplicationLS21.Models.Instructor", b =>
+                {
+                    b.Property<int>("InstructorID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InstructorID"));
+
+                    b.Property<string>("Bio")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("InstructorID");
+
+                    b.ToTable("Instructor", (string)null);
                 });
 
             modelBuilder.Entity("WebApplicationLS21.Models.User", b =>
@@ -257,11 +265,13 @@ namespace WebApplicationLS21.Migrations
 
             modelBuilder.Entity("WebApplicationLS21.Models.Course", b =>
                 {
-                    b.HasOne("WebApplicationLS21.Models.User", "Instructor")
+                    b.HasOne("WebApplicationLS21.Models.Instructor", "Instructor")
                         .WithMany("Courses")
-                        .HasForeignKey("InstructorID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("InstructorID");
+
+                    b.HasOne("WebApplicationLS21.Models.User", null)
+                        .WithMany("Courses")
+                        .HasForeignKey("UserID");
 
                     b.Navigation("Instructor");
                 });
@@ -273,6 +283,11 @@ namespace WebApplicationLS21.Migrations
                     b.Navigation("Lessons");
 
                     b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("WebApplicationLS21.Models.Instructor", b =>
+                {
+                    b.Navigation("Courses");
                 });
 
             modelBuilder.Entity("WebApplicationLS21.Models.User", b =>

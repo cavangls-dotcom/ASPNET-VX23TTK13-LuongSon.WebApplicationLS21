@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using CourseHub.Models;
+using WebApplicationLS21.Data;
 
 namespace WebApplicationLS21.Models
 {
@@ -24,9 +25,9 @@ namespace WebApplicationLS21.Models
 
         // Khóa ngoại tới giảng viên (User)
         [ForeignKey("Instructor")]
-        public int InstructorID { get; set; }
+        public int? InstructorID { get; set; }
 
-        public User? Instructor { get; set; }
+        public Instructor? Instructor { get; set; }
 
         // Quan hệ 1-Nhiều
         public ICollection<Lesson>? Lessons { get; set; }

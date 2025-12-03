@@ -36,6 +36,7 @@ namespace WebApplicationLS21.Data
             modelBuilder.Entity<Lesson>().ToTable("Lesson");
             modelBuilder.Entity<Review>().ToTable("Review");
 
+            
             // 3. KHẮC PHỤC LỖI MULTIPLE CASCADE PATHS (SQL Server Error 1785)
             // Lỗi này xảy ra khi có nhiều đường dẫn xóa phân cấp trong mối quan hệ.
             // Chúng ta vô hiệu hóa hành vi ON DELETE CASCADE mặc định cho tất cả các khóa ngoại.

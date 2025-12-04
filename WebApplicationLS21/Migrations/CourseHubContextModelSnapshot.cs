@@ -122,6 +122,9 @@ namespace WebApplicationLS21.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<string>("ContentFilePath")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -152,7 +155,7 @@ namespace WebApplicationLS21.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Course", (string)null);
+                    b.ToTable("Courses", (string)null);
                 });
 
             modelBuilder.Entity("WebApplicationLS21.Models.Instructor", b =>

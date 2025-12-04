@@ -12,8 +12,8 @@ using WebApplicationLS21.Data;
 namespace WebApplicationLS21.Migrations
 {
     [DbContext(typeof(CourseHubContext))]
-    [Migration("20251204033458_Init")]
-    partial class Init
+    [Migration("20251205074934_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -125,6 +125,9 @@ namespace WebApplicationLS21.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<string>("ContentFilePath")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -155,7 +158,7 @@ namespace WebApplicationLS21.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Course", (string)null);
+                    b.ToTable("Courses", (string)null);
                 });
 
             modelBuilder.Entity("WebApplicationLS21.Models.Instructor", b =>

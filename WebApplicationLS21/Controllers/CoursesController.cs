@@ -21,8 +21,7 @@ namespace WebApplicationLS21.Controllers
         // GET: Courses
         public async Task<IActionResult> Index()
         {
-            var courseHubContext = _context.Courses
-                                           .Include(c => c.Instructor);
+            var courseHubContext = _context.Courses.Include(c => c.Instructor);
             return View(await courseHubContext.ToListAsync());
         }
 
@@ -50,12 +49,32 @@ namespace WebApplicationLS21.Controllers
         // POST: Courses/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CourseID,Title,Description,Category,Price,DurationHours,InstructorID")] Course course)
+        public async Task<IActionResult> Create(
+            [Bind("CourseID,Title,Description,Category,Price,DurationHours,InstructorID")] Course course,
+            IFormFile? contentFile)
         {
             if (!ModelState.IsValid)
             {
                 ViewData["InstructorID"] = new SelectList(_context.Instructors, "InstructorID", "FullName", course.InstructorID);
                 return View(course);
+            }
+
+            // ⭐ Upload file nội dung khóa học
+            if (contentFile != null && contentFile.Length > 0)
+            {
+                string uploadFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads/content");
+                if (!Directory.Exists(uploadFolder))
+                    Directory.CreateDirectory(uploadFolder);
+
+                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(contentFile.FileName);
+                string filePath = Path.Combine(uploadFolder, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await contentFile.CopyToAsync(stream);
+                }
+
+                course.ContentFilePath = "/uploads/content/" + fileName;
             }
 
             _context.Add(course);
@@ -78,7 +97,8 @@ namespace WebApplicationLS21.Controllers
         // POST: Courses/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CourseID,Title,Description,Category,Price,DurationHours,InstructorID")] Course course)
+        public async Task<IActionResult> Edit(int id,
+            [Bind("CourseID,Title,Description,Category,Price,DurationHours,InstructorID,ContentFilePath")] Course course)
         {
             if (id != course.CourseID) return NotFound();
 
@@ -102,6 +122,11 @@ namespace WebApplicationLS21.Controllers
             }
 
             return RedirectToAction(nameof(Index));
+        }
+
+        private bool CourseExists(int id)
+        {
+            return _context.Courses.Any(e => e.CourseID == id);
         }
 
         // GET: Courses/Delete/5
@@ -132,11 +157,6 @@ namespace WebApplicationLS21.Controllers
             }
 
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool CourseExists(int id)
-        {
-            return _context.Courses.Any(e => e.CourseID == id);
         }
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebApplicationLS21.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -44,7 +44,7 @@ namespace WebApplicationLS21.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Course",
+                name: "Courses",
                 columns: table => new
                 {
                     CourseID = table.Column<int>(type: "int", nullable: false)
@@ -56,18 +56,19 @@ namespace WebApplicationLS21.Migrations
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     InstructorID = table.Column<int>(type: "int", nullable: true),
                     DurationHours = table.Column<int>(type: "int", nullable: false),
+                    ContentFilePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Course", x => x.CourseID);
+                    table.PrimaryKey("PK_Courses", x => x.CourseID);
                     table.ForeignKey(
-                        name: "FK_Course_Instructor_InstructorID",
+                        name: "FK_Courses_Instructor_InstructorID",
                         column: x => x.InstructorID,
                         principalTable: "Instructor",
                         principalColumn: "InstructorID");
                     table.ForeignKey(
-                        name: "FK_Course_User_UserID",
+                        name: "FK_Courses_User_UserID",
                         column: x => x.UserID,
                         principalTable: "User",
                         principalColumn: "UserID");
@@ -87,9 +88,9 @@ namespace WebApplicationLS21.Migrations
                 {
                     table.PrimaryKey("PK_Enrollment", x => x.EnrollmentID);
                     table.ForeignKey(
-                        name: "FK_Enrollment_Course_CourseID",
+                        name: "FK_Enrollment_Courses_CourseID",
                         column: x => x.CourseID,
-                        principalTable: "Course",
+                        principalTable: "Courses",
                         principalColumn: "CourseID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -115,9 +116,9 @@ namespace WebApplicationLS21.Migrations
                 {
                     table.PrimaryKey("PK_Lesson", x => x.LessonID);
                     table.ForeignKey(
-                        name: "FK_Lesson_Course_CourseID",
+                        name: "FK_Lesson_Courses_CourseID",
                         column: x => x.CourseID,
-                        principalTable: "Course",
+                        principalTable: "Courses",
                         principalColumn: "CourseID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -138,9 +139,9 @@ namespace WebApplicationLS21.Migrations
                 {
                     table.PrimaryKey("PK_Review", x => x.ReviewID);
                     table.ForeignKey(
-                        name: "FK_Review_Course_CourseID",
+                        name: "FK_Review_Courses_CourseID",
                         column: x => x.CourseID,
-                        principalTable: "Course",
+                        principalTable: "Courses",
                         principalColumn: "CourseID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -152,13 +153,13 @@ namespace WebApplicationLS21.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Course_InstructorID",
-                table: "Course",
+                name: "IX_Courses_InstructorID",
+                table: "Courses",
                 column: "InstructorID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Course_UserID",
-                table: "Course",
+                name: "IX_Courses_UserID",
+                table: "Courses",
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
@@ -200,7 +201,7 @@ namespace WebApplicationLS21.Migrations
                 name: "Review");
 
             migrationBuilder.DropTable(
-                name: "Course");
+                name: "Courses");
 
             migrationBuilder.DropTable(
                 name: "Instructor");

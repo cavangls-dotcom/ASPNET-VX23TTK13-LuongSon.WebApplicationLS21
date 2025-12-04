@@ -30,7 +30,7 @@ namespace WebApplicationLS21.Data
                 .HasPrecision(18, 2);
 
             // Đảm bảo tên bảng là số nhiều, nếu bạn muốn tuân theo quy ước chung
-            modelBuilder.Entity<Course>().ToTable("Course");
+            modelBuilder.Entity<Course>().ToTable("Courses");
             modelBuilder.Entity<Instructor>().ToTable("Instructor");
             modelBuilder.Entity<Enrollment>().ToTable("Enrollment");
             modelBuilder.Entity<Lesson>().ToTable("Lesson");

@@ -130,12 +130,13 @@ namespace WebApplicationLS21.Controllers
         }
 
         // GET: Courses/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Detail(int? id)
         {
             if (id == null) return NotFound();
 
             var course = await _context.Courses
                 .Include(c => c.Instructor)
+                .Include(c => c.Reviews)          // ⭐ BẮT BUỘC
                 .FirstOrDefaultAsync(m => m.CourseID == id);
 
             if (course == null) return NotFound();

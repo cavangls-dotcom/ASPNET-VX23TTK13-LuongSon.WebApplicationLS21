@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplicationLS21.Data;
 
@@ -11,9 +12,11 @@ using WebApplicationLS21.Data;
 namespace WebApplicationLS21.Migrations
 {
     [DbContext(typeof(CourseHubContext))]
-    partial class CourseHubContextModelSnapshot : ModelSnapshot
+    [Migration("20251212071900_AddReviewTable")]
+    partial class AddReviewTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

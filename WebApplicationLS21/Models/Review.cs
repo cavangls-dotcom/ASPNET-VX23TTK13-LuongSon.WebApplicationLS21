@@ -1,19 +1,16 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using WebApplicationLS21.Models;
 
-namespace CourseHub.Models
+namespace WebApplicationLS21.Models
 {
     public class Review
     {
         [Key]
         public int ReviewID { get; set; }
 
-        [ForeignKey("User")]
+        // KHÔNG DÙNG ForeignKey attribute ở đây
         public int UserID { get; set; }
-
-        [ForeignKey("Course")]
         public int CourseID { get; set; }
 
         [Range(1, 5)]
@@ -24,6 +21,7 @@ namespace CourseHub.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
+        // Navigation properties
         public User? User { get; set; }
         public Course? Course { get; set; }
     }

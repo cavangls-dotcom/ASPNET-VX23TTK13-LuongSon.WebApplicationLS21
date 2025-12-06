@@ -31,7 +31,7 @@ namespace WebApplicationLS21.Models
         public string? ContentFilePath { get; set; }
 
         public ICollection<Lesson>? Lessons { get; set; }
-        public ICollection<Review>? Reviews { get; set; }
+        public ICollection<Review>? Reviews { get; set; }   // ✔ CHỈ GIỮ LẠI DÒNG NÀY
         public ICollection<Enrollment>? Enrollments { get; set; }
     }
 }
